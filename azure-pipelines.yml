@@ -1,13 +1,13 @@
 trigger:
-- main
+- dockertest
 
 resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
-  dockerRegistryServiceConnection: 'laravel'  # Replace with your DockerHub service connection name
-  imageName: 'laravel'  # Replace with your DockerHub repository name
+  dockerRegistryServiceConnection: 'laravel'  # DockerHub service connection name
+  imageName: 'mohan0736/laravel'  # DockerHub repository name
+  latestTag: 'latest'  # Use 'latest' tag for the image
 
 stages:
 - stage: Build
@@ -23,7 +23,8 @@ stages:
       inputs:
         command: 'build'
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: '$(imageName):$(tag)'
+        tags: |
+          $(imageName):$(latestTag)  # Tag image as 'latest'
         containerRegistry: $(dockerRegistryServiceConnection)
 
     - task: Docker@2
@@ -32,4 +33,5 @@ stages:
         command: 'push'
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageName)
-        tags: '$(tag)'
+        tags: |
+          $(latestTag)  # Push image with 'latest' tag
