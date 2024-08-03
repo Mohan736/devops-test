@@ -1,13 +1,13 @@
 trigger:
-- dockertest
+- dockertest  # Branch that triggers the pipeline
 
 resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
-  dockerRegistryServiceConnection: 'laravel'  # Replace with your DockerHub service connection name
-  imageName: 'laravel'  # Replace with your DockerHub repository name
+  tag: '$(Build.BuildId)'  # Unique build identifier
+  dockerRegistryServiceConnection: 'laravel'  # DockerHub service connection name
+  imageName: 'laravel'  # DockerHub repository name
 
 stages:
 - stage: Build
