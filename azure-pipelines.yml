@@ -23,7 +23,7 @@ stages:
       inputs:
         command: 'build'
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: '$(imageName):$(tag)'  # Ensure this tag is consistent with the push tag
+        tags: '$(imageName):$(tag)'  # Ensure the tag is consistent
         containerRegistry: $(dockerRegistryServiceConnection)
 
     - task: Docker@2
@@ -32,4 +32,4 @@ stages:
         command: 'push'
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageName)
-        tags: '$(tag)'  # Ensure this tag matches the build tag
+        tags: '$(tag)'  # Ensure the tag matches the build tag
