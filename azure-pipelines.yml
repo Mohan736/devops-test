@@ -1,5 +1,5 @@
 trigger:
-- dockertest  # Branch that triggers the pipeline
+- dockertest
 
 resources:
 - repo: self
@@ -23,7 +23,7 @@ stages:
       inputs:
         command: 'build'
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: '$(imageName):$(tag)'
+        tags: '$(imageName):$(tag)'  # Ensure this tag is consistent with the push tag
         containerRegistry: $(dockerRegistryServiceConnection)
 
     - task: Docker@2
@@ -32,4 +32,4 @@ stages:
         command: 'push'
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageName)
-        tags: '$(tag)'
+        tags: '$(tag)'  # Ensure this tag matches the build tag
