@@ -5,9 +5,9 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'  # Unique build identifier
   dockerRegistryServiceConnection: 'laravel'  # DockerHub service connection name
   imageName: 'laravel'  # DockerHub repository name
+  latestTag: 'latest'  # Use 'latest' tag for the image
 
 stages:
 - stage: Build
@@ -23,7 +23,8 @@ stages:
       inputs:
         command: 'build'
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: '$(imageName):$(tag)'  # Ensure the tag is consistent
+        tags: |
+          $(imageName):$(latestTag)  # Tag image as 'latest'
         containerRegistry: $(dockerRegistryServiceConnection)
 
     - task: Docker@2
@@ -32,4 +33,5 @@ stages:
         command: 'push'
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageName)
-        tags: '$(tag)'  # Ensure the tag matches the build tag
+        tags: |
+          $(latestTag)  # Push image with 'latest' tag
