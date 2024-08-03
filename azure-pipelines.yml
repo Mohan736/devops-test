@@ -24,7 +24,7 @@ stages:
         command: 'build'
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
-          $(imageName):$(tagName)  # Tag image as 'latest'
+          $(imageName):$(tagName)  # Ensure this tag is used
         containerRegistry: $(dockerRegistryServiceConnection)
 
     - task: Docker@2
@@ -34,4 +34,4 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageName)
         tags: |
-          $(tagName)  # Push image with 'latest' tag
+          $(tagName)  # Ensure this tag is used
